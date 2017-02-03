@@ -27,5 +27,6 @@ First servo conected to PB0 receive 1250usec pulse avery 20000usec. Other 3 serv
 I am use avrdude usbtiny for program attiny13.
 
 Fuses: h:FF l:7A
+avrdude -p attiny13 -P usb -c usbtiny -e -U lfuse:w:0x7A:m -U hfuse:w:0xff:m
 
 
