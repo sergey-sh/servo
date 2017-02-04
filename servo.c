@@ -3,7 +3,9 @@
 // CLOCK8 без него был 1M тактовая частота,теперь 9.6M
 #include <avr/io.h>
 
+#ifndef SERVOCTRLSIGN 
 #define SERVOCTRLSIGN 0xF1
+#endif
 
 #define F_CPU 9600000UL
 #define RxBit PB4

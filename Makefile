@@ -246,6 +246,19 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 # Default target.
 all: begin gccversion sizebefore build sizeafter finished end
 
+servo0: remove-obj define-sig0 all
+
+servo1: remove-obj define-sig1 all
+
+remove-obj:
+	$(REMOVE) $(TARGET).o
+
+define-sig0: 
+	$(eval CFLAGS+=-D SERVOCTRLSIGN=0xF1)
+
+define-sig1: 
+	$(eval CFLAGS+=-D SERVOCTRLSIGN=0xF2)
+
 build: elf hex eep lss sym
 
 elf: $(TARGET).elf
@@ -297,15 +310,11 @@ program2: $(TARGET).hex $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE2_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
 
 # erase the device
-# fuses:    0xFF,0xDF14    (stk500:   attiny2313 default, internal osc, etc.)
-# fuses:    0xFF,0xDF,0x64 (stk500v2: attiny2313 default, internal osc, etc.)
-# lockbits: 0xE3  (stk500:   mode 1, no memory locks) 
-# lockbits: 0xFF  (stk500v2: mode 1, no memory locks)
-# ATtiny15 out of the box (avrdude): lfuse:6A hfuse:FF
-# ATtiny15 should be (avrdude): lfuse:79 hfuse:FF
+# ATtiny13 out of the box (avrdude): lfuse:6A hfuse:FF
+# ATtiny13 should be (avrdude): lfuse:7A hfuse:FF
 erase:
 #	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -U lock:w:0x3f:m -U lfuse:w:0xdf:m -U hfuse:w:0xca:m
-	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -U lfuse:w:0x79:m -U hfuse:w:0xff:m
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -U lfuse:w:0x7A:m -U hfuse:w:0xff:m
 
 
 # Convert ELF to COFF for use in debugging / simulating in AVR Studio or VMLAB.
