@@ -316,6 +316,8 @@ erase:
 #	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -U lock:w:0x3f:m -U lfuse:w:0xdf:m -U hfuse:w:0xca:m
 	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -U lfuse:w:0x7A:m -U hfuse:w:0xff:m
 
+fuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:0x7A:m -U hfuse:w:0xff:m
 
 # Convert ELF to COFF for use in debugging / simulating in AVR Studio or VMLAB.
 COFFCONVERT=$(OBJCOPY) --debugging \

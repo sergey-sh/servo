@@ -26,7 +26,7 @@ typedef struct { uint8_t lo, hi; } bytePair;
 
 #define COUNT_DATA 4
 #define COUNT_SERVO 4
-#define SERVO_BIT (1<<COUNT_SERVO)-1
+#define SERVO_BIT ((1<<COUNT_SERVO)-1)
 #define US_TO_4TICK F_CPU/1000000/4
 
 uint8_t readedchar = 0;
@@ -229,7 +229,6 @@ void main(void) {
 	while(1) {
 		w = RX_DATA_20TICK;
 		while(w>SMALL_RX_DATA_TICK20) {
-   			PORTB &=  ~_BV( PB3 );
 			w = readpack(w);
 		}
 		delay_w20tick(w);
